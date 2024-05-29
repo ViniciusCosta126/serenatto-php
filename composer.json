@@ -1,0 +1,24 @@
+{
+  "name": "viniciusc6/serenato",
+  "description": "Projeto para estudar php com mysql",
+  "type": "project",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Viniciusc6\\Serenato\\": "src/"
+    }
+  },
+  "scripts": {
+    "start": [
+      "Composer\\Config::disableProcessTimeout",
+      "php -S localhost:5500"
+    ]
+  },
+  "authors": [
+    {
+      "name": "Vinicius Costa",
+      "email": "54358510+ViniciusCosta126@users.noreply.github.com"
+    }
+  ],
+  "require": {}
+}
