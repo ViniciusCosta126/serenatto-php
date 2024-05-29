@@ -2,39 +2,11 @@
 require_once 'vendor/autoload.php';
 require "src/conexao-bd.php";
 
-use Viniciusc6\Serenato\Model\Produto;
+use Viniciusc6\Serenato\Repository\ProdutoRepository;
 
-$sqlQuery = "SELECT * FROM produtos WHERE tipo='Café' ORDER BY preco;";
-$stmt = $pdo->query($sqlQuery);
-$produtosCafe = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$dadosCafe = array_map(function ($cafe) {
-    return new Produto(
-        $cafe['id'],
-        $cafe['tipo'],
-        $cafe['nome'],
-        $cafe['descricao'],
-        $cafe['imagem'],
-        $cafe['preco']
-    );
-}, $produtosCafe);
-
-
-$sqlQuery = "SELECT * FROM produtos WHERE tipo='Almoço' ORDER BY preco;";
-$stmt = $pdo->query($sqlQuery);
-$produtosAlmoco = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$dadosAlmoco = array_map(function ($cafe) {
-    return new Produto(
-        $cafe['id'],
-        $cafe['tipo'],
-        $cafe['nome'],
-        $cafe['descricao'],
-        $cafe['imagem'],
-        $cafe['preco']
-    );
-}, $produtosAlmoco);
-
-
+$produtoRepository = new ProdutoRepository($pdo);
+$dadosCafe = $produtoRepository->opcoesComida("Café");
+$dadosAlmoco = $produtoRepository->opcoesComida("Almoço");
 ?>
 
 <!doctype html>
