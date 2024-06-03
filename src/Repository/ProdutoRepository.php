@@ -52,6 +52,18 @@ class ProdutoRepository
         return $dadosProduto;
     }
 
+    public function salvar(Produto $produto)
+    {
+        $sqlQuery = "INSERT INTO produtos(tipo,nome,descricao,preco,imagem) VALUES(?,?,?,?,?);";
+        $stmt = $this->pdo->prepare($sqlQuery);
+        $stmt->bindValue(1, $produto->getTipo());
+        $stmt->bindValue(2, $produto->getNome());
+        $stmt->bindValue(3, $produto->getDescricao());
+        $stmt->bindValue(4, $produto->getPreco());
+        $stmt->bindValue(5, $produto->getImagem());
+        $stmt->execute();
+    }
+
     public function deletar(int $id): void
     {
         $sqlQuery = 'DELETE FROM produtos WHERE id=?';
