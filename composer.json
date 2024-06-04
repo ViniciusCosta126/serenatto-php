@@ -20,5 +20,7 @@
       "email": "54358510+ViniciusCosta126@users.noreply.github.com"
     }
   ],
-  "require": {}
+  "require": {
+    "dompdf/dompdf": "^3.0"
+  }
 }

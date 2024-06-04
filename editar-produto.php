@@ -16,7 +16,6 @@ if (isset($_POST['editar'])) {
     move_uploaded_file($_FILES['imagem']['tmp_name'], $produto->getImagemDiretorio());
   }
 
-
   $produtoRepository->atualizar($produto);
   header("Location: admin.php");
 } else {

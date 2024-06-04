@@ -72,7 +72,7 @@ $produtos = $produtoRepository->getAllProdutos();
         </tbody>
       </table>
       <a class="botao-cadastrar" href="cadastrar-produto.php">Cadastrar produto</a>
-      <form>
+      <form action="gerador-pdf.php">
         <input type="submit" class="botao-cadastrar" value="Baixar Relatório" />
       </form>
     </section>
