@@ -20,7 +20,6 @@ class ProdutoRepository
         $sqlQuery = 'SELECT * FROM produtos ORDER BY preco;';
         $stmt = $this->pdo->prepare($sqlQuery);
         $stmt->execute();
-
         $produtos = $this->sanitizeProduto($stmt);
         return $produtos;
     }
@@ -35,6 +34,27 @@ class ProdutoRepository
         return $produtos;
     }
 
+    public function buscaPorId(int $id): Produto
+    {
+        $sqlQuery = 'SELECT * FROM produtos WHERE id=?;';
+
+        $stmt = $this->pdo->prepare($sqlQuery);
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
+        $produto  = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $produtoSanitize = new Produto(
+            $produto['id'],
+            $produto['tipo'],
+            $produto['nome'],
+            $produto['descricao'],
+            $produto['preco'],
+            $produto['imagem']
+
+        );
+        return $produtoSanitize;
+    }
+
     private function sanitizeProduto(PDOStatement $stmt): array
     {
         $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -45,8 +65,8 @@ class ProdutoRepository
                 $produto['tipo'],
                 $produto['nome'],
                 $produto['descricao'],
-                $produto['imagem'],
-                $produto['preco']
+                $produto['preco'],
+                $produto['imagem']
             );
         }, $produtos);
         return $dadosProduto;
@@ -61,6 +81,19 @@ class ProdutoRepository
         $stmt->bindValue(3, $produto->getDescricao());
         $stmt->bindValue(4, $produto->getPreco());
         $stmt->bindValue(5, $produto->getImagem());
+        $stmt->execute();
+    }
+
+    public function atualizar(Produto $produto)
+    {
+        $sqlQuery = "UPDATE produtos SET tipo=?,nome=?,descricao=?,preco=?,imagem=? WHERE id=?;";
+        $stmt = $this->pdo->prepare($sqlQuery);
+        $stmt->bindValue(1, $produto->getTipo());
+        $stmt->bindValue(2, $produto->getNome());
+        $stmt->bindValue(3, $produto->getDescricao());
+        $stmt->bindValue(4, $produto->getPreco());
+        $stmt->bindValue(5, $produto->getImagem());
+        $stmt->bindValue(6, $produto->getId());
         $stmt->execute();
     }
 
